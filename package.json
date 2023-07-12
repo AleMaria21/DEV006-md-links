@@ -8,5 +8,24 @@
     "createdAt": "2023-05-17T14:36:24.002Z",
     "version": "6.2.0",
     "commit": "6de8e2f7e38d779fd6845c63477977fb1eb3af99"
+  },
+  "description": "## Índice",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@laboratoria/curriculum-parser": "github:Laboratoria/course-parser",
+    "fs": "^0.0.1-security",
+    "jsdom": "^22.1.0",
+    "markdown-it": "^13.0.1",
+    "markdown-link-extractor": "^3.1.0",
+    "node-fetch": "^2.6.1"
   }
 }
