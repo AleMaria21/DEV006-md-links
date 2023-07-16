@@ -10,7 +10,7 @@ function isAbsolute(route) {
 }
 
 function relativeToAbsolute(route) {
-    console.log('absoluta', path.resolve(route))
+    //console.log('absoluta', path.resolve(route))
     return path.resolve(route);
 }
 
@@ -67,19 +67,23 @@ function getMdFilesInDirectory(route) {
             if (err) {
                 reject(err); // Rechaza la promesa si hay un error al leer el directorio
             } else {
-                const mdFilePathsExtraidos= files
+                const mdFilePathsExtraidos = files
                     .map((file) => path.join(route, file))
                     .filter((mdFile) => path.extname(mdFile) === ".md")// Filtra solo los archivos con extensión ".md"
+
                 
                     if (mdFilePathsExtraidos.length === 0) {
-                    reject("El directorio no contiene archivos MD");
-                } else {
-                    resolve(mdFilePathsExtraidos);
+                        reject("El directorio no contiene archivos MD");
+                    } else {
+                        //console.log('rutas de archivos del dic', mdFilePathsExtraidos)
+                        resolve(mdFilePathsExtraidos);
+                    }
                 }
-            }
+            });
         });
-    });
-}
+    }  
+
+
 
 //Lee el archivo Markdown
 function readMdFile(route) {
@@ -111,12 +115,13 @@ const getLinksMd = (route) => {
                 links.forEach((link) => {
                     const href = link.getAttribute('href');
                     const text = link.textContent.slice(0, 50);
+                    const file = relativeToAbsolute(route);
                     if (href.startsWith('https://') || href.startsWith('http://')) {
-                        allLinks.push({ href, text });
+                        allLinks.push({ href, text, file });
                     }
                 });
 
-                console.log('links http');
+                //console.log('links http', allLinks);
                 resolve(allLinks);
             })
             .catch((error) => {
@@ -129,6 +134,8 @@ const getLinksMd = (route) => {
 function validateLinks(allLinks) {
     //console.log('probando argumento', allLinks)
     return new Promise((resolve, reject) => {
+  
+
         const promises = allLinks.map((link) => {
             return new Promise((resolve) => {
                 fetch(link.href, { method: 'HEAD' })
@@ -140,7 +147,7 @@ function validateLinks(allLinks) {
                             status: response.status === 200 ? 200 : 404,
                             ok: response.status === 200 ? 'ok' : 'fail',
                         }
-                        //console.log('validado', result)
+                        //console.log('validado')
                         resolve(result);
 
                     })
@@ -160,8 +167,8 @@ function validateLinks(allLinks) {
         });
         //console.log('son estas', promises)
         Promise.all(promises)
-            .then((results) => {
-                resolve(results);
+            .then((result) => {
+                resolve(result);
             })
             .catch((error) => {
                 reject(error);
@@ -191,15 +198,16 @@ const allLinks = [
 ]
 
 
-validateLinks(allLinks)
-    .then((results) => {
-        //console.log('funciona', results);
+/*validateLinks(allLinks)
+    .then((result) => {
+        console.log('funciona', result);
     })
     .catch((error) => {
         console.error(error);
-    });
+    });*/
 
-getMdFilesInDirectory('/Users/alejo/Documents/GitHub/DEV006-md-links/node_modules/acorn')
+
+//getMdFilesInDirectory('/Users/alejo/Documents/GitHub/DEV006-md-links/node_modules/acorn')
 //getLinksMd('/Users/alejo/Documents/GitHub/DEV006-md-links/node_modules/acorn/README.md')
 
 module.exports = {
