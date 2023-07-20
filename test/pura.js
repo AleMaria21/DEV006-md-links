@@ -23,7 +23,7 @@ function isValidPath(route) {
                 console.log('Error al verificar la existencia:', err)
                 resolve(false);
             } else {
-                console.log('Ruta válida:', route);
+                //console.log('Ruta válida:', route);
                 resolve(true);
             }
         });
@@ -63,9 +63,10 @@ function isFileOrDic(route) {
 
 function getMdFilesInDirectory(route) {
     return new Promise((resolve, reject) => {
-        fs.readdir(route, (err, files) => {
-            if (err) {
-                reject(err); // Rechaza la promesa si hay un error al leer el directorio
+        fs.readdir(route, (error, files) => {
+            if (error) {
+                console.log('este', error)
+                reject(new Error('Error al leer el directorio: ' + error.message));
             } else {
                 const mdFilePathsExtraidos = files
                     .map((file) => path.join(route, file))
@@ -93,10 +94,9 @@ function readMdFile(route) {
                 console.log('.md no leído, error')
                 reject(err);
             } else {
-                console.log('.md leido')
+                //console.log('.md leido')
                 resolve(data)
             }
-
         })
     })
 }
@@ -121,11 +121,11 @@ const getLinksMd = (route) => {
                     }
                 });
 
-                //console.log('links http', allLinks);
+                console.log('links http');
                 resolve(allLinks);
             })
             .catch((error) => {
-                console.log('error extración links', error)
+                //console.log('error extración links', error)
                 reject(error);
             });
     });
@@ -206,8 +206,8 @@ const allLinks = [
         console.error(error);
     });*/
 
-
-//getMdFilesInDirectory('/Users/alejo/Documents/GitHub/DEV006-md-links/node_modules/acorn')
+    //isValidPath('/Users/alejo/Documents/GitHub/DEV006-md-links/node_modules/acorn');
+//getMdFilesInDirectory('/Users/alejo/Documents/GitHub/DEV006-md-links/node_modules/.bin')
 //getLinksMd('/Users/alejo/Documents/GitHub/DEV006-md-links/node_modules/acorn/README.md')
 
 module.exports = {

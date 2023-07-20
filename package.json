@@ -15,7 +15,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -24,8 +24,12 @@
     "@laboratoria/curriculum-parser": "github:Laboratoria/course-parser",
     "fs": "^0.0.1-security",
     "jsdom": "^22.1.0",
+    "linkify-it": "^4.0.1",
     "markdown-it": "^13.0.1",
     "markdown-link-extractor": "^3.1.0",
     "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "jest": "^29.6.1"
   }
 }
