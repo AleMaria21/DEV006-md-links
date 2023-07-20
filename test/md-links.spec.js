@@ -65,15 +65,15 @@ describe('relativeToAbsolute', () => {
   });
 });
 
-/*describe('isValidPath', () => {
+describe('isValidPath', () => {
   test('debería validar si una ruta es válida', () => {
     expect.assertions(1);
-    const ruta = '/ruta/absoluta';
+    const ruta = '/Users/alejo/Documents/GitHub/DEV006-md-links/node_modules/acorn';
     return isValidPath(ruta).then((isValid) => {
       expect(isValid).toBe(true);
     });
   });
-});*/
+});
 
 describe("IsValidPath", () => {
   it('is function', () => {
@@ -130,19 +130,7 @@ test('should reject with an error for directory without .md files', () => {
 
 describe('getMdFilesInDirectory', () => {
   const fs = require('fs').promises;
-  const testDirectory = './testFiles'; // Ajusta la ruta a un directorio de prueba con archivos .md
-
-  // Antes de cada test, creamos algunos archivos .md en el directorio de prueba
-  beforeEach(() => {
-    return fs.mkdir(testDirectory, { recursive: true })
-      .then(() => fs.writeFile(pathModule.join(testDirectory, 'file1.md'), 'Contenido del archivo 1'))
-      .then(() => fs.writeFile(pathModule.join(testDirectory, 'file2.txt'), 'Este archivo no es .md'));
-  });
-
-  // Después de cada test, limpiamos el directorio de prueba
-  afterEach(() => {
-    return fs.rmdir(testDirectory, { recursive: true });
-  });
+  const testDirectory = '/Users/alejo/Documents/GitHub/DEV006-md-links/test/directorio-prueba'; 
 
   it('debería devolver un array de rutas de archivos .md en el directorio', () => {
     return getMdFilesInDirectory(testDirectory)
@@ -174,7 +162,7 @@ describe('getMdFilesInDirectory', () => {
         // Si la función no rechaza la promesa, el test debería fallar
         expect(error).toBeDefined();
         // Comprobamos que el error sea el esperado (puedes ajustar el mensaje de error según sea necesario)
-        expect(error.message).toContain('Error al leer el directorio');
+        expect(error).toContain('El directorio no contiene archivos MD');
       });
   });
 });

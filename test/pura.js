@@ -16,11 +16,11 @@ function relativeToAbsolute(route) {
 
 function isValidPath(route) {
     return new Promise((resolve) => {
-        console.log('Verificnado la existencia de la ruta', route);
+        //console.log('Verificnado la existencia de la ruta', route);
         //f_ok verifica la existencia del archivo o dir.
         fs.access(route, fs.constants.F_OK, (err) => {
             if (err) {
-                console.log('Error al verificar la existencia:', err)
+                //console.log('Error al verificar la existencia:', err)
                 resolve(false);
             } else {
                 //console.log('Ruta válida:', route);
@@ -66,23 +66,23 @@ function getMdFilesInDirectory(route) {
         fs.readdir(route, (error, files) => {
             if (error) {
                 console.log('este', error)
-                reject(new Error('Error al leer el directorio: ' + error.message));
+                reject(new Error('Error al leer el directorio:' + error.message));
             } else {
                 const mdFilePathsExtraidos = files
                     .map((file) => path.join(route, file))
                     .filter((mdFile) => path.extname(mdFile) === ".md")// Filtra solo los archivos con extensión ".md"
 
-                
-                    if (mdFilePathsExtraidos.length === 0) {
-                        reject("El directorio no contiene archivos MD");
-                    } else {
-                        //console.log('rutas de archivos del dic', mdFilePathsExtraidos)
-                        resolve(mdFilePathsExtraidos);
-                    }
+
+                if (mdFilePathsExtraidos.length === 0) {
+                    reject("El directorio no contiene archivos MD");
+                } else {
+                    //console.log('rutas de archivos del dic', mdFilePathsExtraidos)
+                    resolve(mdFilePathsExtraidos);
                 }
-            });
+            }
         });
-    }  
+    });
+}
 
 
 
@@ -134,7 +134,7 @@ const getLinksMd = (route) => {
 function validateLinks(allLinks) {
     //console.log('probando argumento', allLinks)
     return new Promise((resolve, reject) => {
-  
+
 
         const promises = allLinks.map((link) => {
             return new Promise((resolve) => {
@@ -206,7 +206,7 @@ const allLinks = [
         console.error(error);
     });*/
 
-    //isValidPath('/Users/alejo/Documents/GitHub/DEV006-md-links/node_modules/acorn');
+//isValidPath('/Users/alejo/Documents/GitHub/DEV006-md-links/node_modules/acorn');
 //getMdFilesInDirectory('/Users/alejo/Documents/GitHub/DEV006-md-links/node_modules/.bin')
 //getLinksMd('/Users/alejo/Documents/GitHub/DEV006-md-links/node_modules/acorn/README.md')
 
